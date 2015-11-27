@@ -2,6 +2,8 @@
 
 namespace Certly\GlobalSign;
 
+use SoapClient;
+
 class GlobalSign
 {
     /**
@@ -10,6 +12,13 @@ class GlobalSign
      * @var SoapClient
      */
     protected $soap;
+
+    /**
+     * The WSDL files for GlobalSign's API.
+     *
+     * @var array
+     */
+    protected $wsdl;
 
     /**
      * The GlobalSign account username.
@@ -43,7 +52,6 @@ class GlobalSign
      */
     public function __construct($username, $password, $production = true)
     {
-        $this->soap = new SoapClient();
         $this->username = $username;
         $this->password = $password;
         $this->production = $production;

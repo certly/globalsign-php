@@ -44,10 +44,9 @@ class GlobalSign
     /**
      * Create a new GlobalSign API wrapper.
      *
-     * @param string $username
-     * @param string $password
-     * @param bool   $production
-     *
+     * @param  string  $username
+     * @param  string  $password
+     * @param  bool  $production
      * @return void
      */
     public function __construct($username, $password, $production = true)
@@ -55,5 +54,54 @@ class GlobalSign
         $this->username = $username;
         $this->password = $password;
         $this->production = $production;
+    }
+    
+    /**
+     * Catch all calls to the class and treat them as a SOAP request.
+     *
+     * @param  string  $method
+     * @param  array  $arguments
+     * @return array
+     */
+    public function __call($method, $arguments)
+    {
+        return $this->soapCall($method, $arguments[1]);
+    }
+    
+    /**
+     * Call SoapClient->__soapCall with the parameters we build.
+     *
+     * @param  string  $method
+     * @param  array  $arguments
+     * @return array
+     */
+    protected function soapCall($method, $arguments)
+    {
+        return $this->soap->__soapCall($method, $this->build($method, $arguments));
+    }
+    
+    /**
+     * Add the function's arguments to the SOAP call.
+     *
+     * @param  string  $method
+     * @param  array  $arguments
+     * @param  bool  $query
+     * @return array
+     */
+    protected function build($method, $arguments, $query = false)
+    {
+        return [
+            "Request" => [
+                $method => [
+                    ($query ? "QueryRequestHeader" : "OrderRequestHeader") => [
+                        "AuthToken" => [
+                            "UserName" => $this->username,
+                            "Password" => $this->password
+                        ]
+                    ],
+                    $arguments
+                ]
+            ]
+        ]);
     }
 }

@@ -158,7 +158,7 @@ class GlobalSign
                             'UserName' => $this->username,
                             'Password' => $this->password,
                         ],
-                    ]], 
+                    ], ],
                     $arguments),
             ],
         ];

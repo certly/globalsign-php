@@ -151,7 +151,7 @@ class GlobalSign
     protected function build($method, $arguments, $query = false)
     {
         return [
-            'Request' => [
+            'Request' =>
                 array_merge_recursive([
                     ($query ? 'QueryRequestHeader' : 'OrderRequestHeader') => [
                         'AuthToken' => [
@@ -160,7 +160,6 @@ class GlobalSign
                         ],
                     ], ],
                     $arguments),
-            ],
         ];
     }
 }

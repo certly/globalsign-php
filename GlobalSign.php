@@ -142,16 +142,15 @@ class GlobalSign
     /**
      * Add the function's arguments to the SOAP call.
      *
-     * @param array  $arguments
-     * @param bool   $query
+     * @param array $arguments
+     * @param bool  $query
      *
      * @return array
      */
     protected function build($arguments, $query = false)
     {
         return [
-            'Request' =>
-                array_merge_recursive([
+            'Request' => array_merge_recursive([
                     ($query ? 'QueryRequestHeader' : 'OrderRequestHeader') => [
                         'AuthToken' => [
                             'UserName' => $this->username,

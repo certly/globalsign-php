@@ -1,5 +1,5 @@
 # globalsign-php
-![Travis Build Status](https://travis-ci.org/certly/globalsign-php.svg)
+![Travis Build Status](https://travis-ci.org/certly/globalsign-php.svg) [![StyleCI](https://styleci.io/repos/43564129/shield)](https://styleci.io/repos/43564129)
 
 A GlobalSign API wrapper for PHP.
 

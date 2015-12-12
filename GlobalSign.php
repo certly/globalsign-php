@@ -152,14 +152,14 @@ class GlobalSign
     {
         return [
             'Request' => [
-                $method => [
+                $method => array_merge_recursive([
                     ($query ? 'QueryRequestHeader' : 'OrderRequestHeader') => [
                         'AuthToken' => [
                             'UserName' => $this->username,
                             'Password' => $this->password,
                         ],
-                    ],
-                    $arguments,
+                    ]], 
+                    $arguments),
                 ],
             ],
         ];

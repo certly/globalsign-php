@@ -136,19 +136,18 @@ class GlobalSign
      */
     protected function soapCall($method, $arguments, $query = false)
     {
-        return $this->soap[$this->map[$method]]->__soapCall($method, $this->build($method, $arguments, $query));
+        return $this->soap[$this->map[$method]]->{$method}($this->build($arguments, $query));
     }
 
     /**
      * Add the function's arguments to the SOAP call.
      *
-     * @param string $method
      * @param array  $arguments
      * @param bool   $query
      *
      * @return array
      */
-    protected function build($method, $arguments, $query = false)
+    protected function build($arguments, $query = false)
     {
         return [
             'Request' =>

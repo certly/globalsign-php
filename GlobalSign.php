@@ -121,7 +121,7 @@ class GlobalSign
     {
         foreach ($this->soap as $type => $soap) {
             foreach ($soap->__getFunctions() as $function) {
-                $this->map[explode(')', explode(' ', $function)[1])[0]] = $type;
+                $this->map[explode('(', explode(' ', $function)[1])[0]] = $type;
             }
         }
     }

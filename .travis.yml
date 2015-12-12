@@ -5,3 +5,6 @@ php:
   - hhvm
   - nightly
 script: phpunit --bootstrap vendor/autoload.php tests/GlobalSignTest
+cache:
+  directories:
+  - $HOME/.composer

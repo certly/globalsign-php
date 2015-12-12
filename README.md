@@ -10,5 +10,5 @@ require "vendor/autoload.php";
 $api = new Certly\GlobalSign\GlobalSign("PAR123456", "VerySecurePassw0rd!", true);
 echo var_dump($api->GetDVApproverList([
     "FQDN" => "ian.sh"
-]));
+], true));
 ```

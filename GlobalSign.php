@@ -76,7 +76,7 @@ class GlobalSign
      */
     public function __call($method, $arguments)
     {
-        return $this->soapCall($method, $arguments[0], (array_key_exists(1, $arguments) ? $arguments[1] : false))['Response'];
+        return $this->soapCall($method, $arguments[0], (array_key_exists(1, $arguments) ? $arguments[1] : false))->Response;
     }
 
     /**

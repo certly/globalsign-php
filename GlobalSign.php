@@ -2,14 +2,14 @@
 
 namespace Certly\GlobalSign;
 
-use SoapClient;
+use \SoapClient;
 
 class GlobalSign
 {
     /**
-     * The SoapClient instance used to make requests.
+     * The SoapClient instances used to make requests.
      *
-     * @var SoapClient
+     * @var array
      */
     protected $soap;
 
@@ -54,6 +54,8 @@ class GlobalSign
         $this->username = $username;
         $this->password = $password;
         $this->production = $production;
+        $this->wsdl($this->production);
+        $this->soap();
     }
     
     /**
@@ -66,6 +68,37 @@ class GlobalSign
     public function __call($method, $arguments)
     {
         return $this->soapCall($method, $arguments[0]);
+    }
+    
+    /**
+     * Set the WSDL URIs.
+     *
+     * @param  bool  $production
+     * @return array
+     */
+    protected function wsdl($production = true)
+    {
+        return $this->wsdl = [
+            "ServerSSL" => "https://" . (! $production ? "test" : "") . "system.globalsign.com/kb/ws/v1/ServerSSLService?wsdl",
+            "GASService" => "https://" . (! $production ? "test" : "") . "system.globalsign.com/kb/ws/v1/GASService?wsdl",
+            "AccountService" => "https://" . (! $production ? "test" : "") . "system.globalsign.com/kb/ws/v1/AccountService?wsdl",
+            "GasQuery" => "https://system.globalsign.com/qb/ws/GasQuery?wsdl"
+        ];
+    }
+    
+    /**
+     * Create the SoapClient instances.
+     *
+     * @return array
+     */
+    protected function soap()
+    {
+        return $this->soap = [
+            "ServerSSL" => new SoapClient($this->wsdl["ServerSSL"]),
+            "GASService" => new SoapClient($this->wsdl["GASService"]),
+            "AccountService" => new SoapClient($this->wsdl["AccountService"]),
+            "GasQuery" => new SoapClient($this->wsdl["GasQuery"])
+        ];
     }
     
     /**

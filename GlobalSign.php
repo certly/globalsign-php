@@ -21,6 +21,13 @@ class GlobalSign
     protected $wsdl;
 
     /**
+     * The map of functions to their SOAP objects.
+     *
+     * @var array
+     */
+    protected $map;
+    
+    /**
      * The GlobalSign account username.
      *
      * @var string
@@ -53,8 +60,7 @@ class GlobalSign
     {
         $this->username = $username;
         $this->password = $password;
-        $this->production = $production;
-        $this->wsdl($this->production);
+        $this->wsdl($this->production = $production);
         $this->soap();
     }
     
@@ -102,6 +108,21 @@ class GlobalSign
     }
     
     /**
+     * Iterate through the SoapClients and match functions to their instances.
+     * TODO: Replace SOAP with anything else.
+     *
+     * @return array
+     */
+    protected function enumSoapFunctions()
+    {
+        foreach ($this->soap as $type => $soap) {
+            foreach ($soap->__getFunctions() as $function) {
+                $this->map[explode(")", explode(" ", $function)[1])[0]] = $type;
+            }
+        }
+    }
+    
+    /**
      * Call SoapClient->__soapCall with the parameters we build.
      *
      * @param  string  $method
@@ -110,7 +131,7 @@ class GlobalSign
      */
     protected function soapCall($method, $arguments)
     {
-        return $this->soap->__soapCall($method, $this->build($method, $arguments));
+        return $this->soap[$this->map[$method]]->__soapCall($method, $this->build($method, $arguments));
     }
     
     /**

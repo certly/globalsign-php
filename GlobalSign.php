@@ -63,6 +63,7 @@ class GlobalSign
         $this->password = $password;
         $this->wsdl($this->production = $production);
         $this->soap();
+        $this->enumSoapFunctions();
     }
 
     /**

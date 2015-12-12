@@ -14,7 +14,7 @@ class GlobalSign
     protected $soap;
 
     /**
-     * The WSDL files for GlobalSign's API.
+     * The WSDL URIs for GlobalSign's API.
      *
      * @var array
      */
@@ -65,7 +65,7 @@ class GlobalSign
      */
     public function __call($method, $arguments)
     {
-        return $this->soapCall($method, $arguments[1]);
+        return $this->soapCall($method, $arguments[0]);
     }
     
     /**
